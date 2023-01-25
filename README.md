@@ -3,3 +3,6 @@ Single page website you can use to calculate which areas of your life are elevat
 
 ## Weight Calculations
 This calculation is based on using your BMI to identify your optimal weight. Then your Basal Metabolic Rate is compared between both weights. The Basal Metabolic Rate is calcuated by using the average of the Mifflin-St Jeor and Revised Harris-Benedict Equations.
+
+## Sleep Calculations
+This calculation is based on your age and how many hours of sleep you get on average.  I used this site (https://www.sleepfoundation.org/sleep-calculator) to identify the optimal sleep range.

@@ -7,8 +7,6 @@ var StressModel = function() {
     var OPTIMAL_BMI = 21.7;
     var DANGEROUSLY_LOW_BMI = 13.5;
     var DANGEROUSLY_HIGH_BMI = 40;
-    var DANGER_LOW_BMI_FACTOR = DANGEROUSLY_LOW_BMI - OPTIMAL_BMI;
-    var DANGER_HIGH_BMI_FACTOR = DANGEROUSLY_HIGH_BMI - OPTIMAL_BMI;
 
     self.personalInfo = {
         age: 0,
@@ -16,16 +14,23 @@ var StressModel = function() {
         units: null,
         weight: 0,
         height: 0,
+        sleep: 0,
         // Calculated values
         // Current
         cWeightKG: 0,
         cHeightCM: 0,
         cHeightMeters: 0,
+        lSleep: 0,
+        hSleep: 0,
+        cEnergy: 0,
         // Optimal
         oWeightKG: 0,
+        oSleep: 0,
         // Scores
         wScore: 0,
-        wDanger: 0
+        wDanger: 0,
+        sScore: 0,
+        sDanger: 0
     };
 
     self.UpdatePersonalInfo = function() {
@@ -35,6 +40,7 @@ var StressModel = function() {
         info.units = $('#units')[0].value;
         info.weight = parseFloat($('#weight')[0].value);
         info.height = parseFloat($('#height')[0].value);
+        info.sleep = parseFloat($('#sleep')[0].value);
         console.debug(self.personalInfo);
         self.CalculateResults();
     }
@@ -42,8 +48,9 @@ var StressModel = function() {
     self.CalculateResults = function() {
         if (self.ValidPersonalInfo()) {
             self.StandardizePersonalInfo();
-            self.CalcuateWeightScore();
-            self.CalcuateTotalDanger();
+            self.CalculateWeightScore();
+            self.CalculateSleepScore();
+            self.CalculateTotalDanger();
             self.UpdateDisplay();
             console.debug(self.personalInfo);
         } else {
@@ -74,21 +81,21 @@ var StressModel = function() {
         info.cHeightMeters = info.cHeightCM / 100;
     }
 
-    self.CalcuateWeightScore = function() {
-        self.CalcuateBMI();
-        self.CalcuateBMR();
+    self.CalculateWeightScore = function() {
+        self.CalculateBMI();
+        self.CalculateBMR();
         var info = self.personalInfo;
         info.dBMR = Math.abs(info.oBMR - info.cBMR);
         info.wScore = info.dBMR.toFixed(0);
     }
 
-    self.CalcuateBMI = function() {
+    self.CalculateBMI = function() {
         var info = self.personalInfo;
         info.cBMI = info.cWeightKG / Math.pow(info.cHeightMeters, 2);
         info.oWeightKG = OPTIMAL_BMI * Math.pow(info.cHeightMeters, 2);
     }
 
-    self.CalcuateBMR = function() {
+    self.CalculateBMR = function() {
         var info = self.personalInfo;
         var cMsj = self.CalculateMSJ(info.age, info.gender, info.cWeightKG, info.cHeightCM);
         var oMsj = self.CalculateMSJ(info.age, info.gender, info.oWeightKG, info.cHeightCM);
@@ -123,17 +130,80 @@ var StressModel = function() {
         return (weightModifier * weightKG) + (heightModifier * heightCM) - (ageModifier * age) + genderModifier;
     }
 
-    self.CalcuateTotalDanger = function() {
+    self.CalculateSleepScore = function() {
+        self.AssignSleepRange();
         var info = self.personalInfo;
-        self.CalcuateWeightDanger();
-        info.tDanger = info.wDanger;
+        info.oSleep = (info.lSleep + info.hSleep) / 2;
+        info.sScore = 0;
+        if (info.lSleep - info.sleep > 0) {
+            info.sScore = info.lSleep - info.sleep;
+        } else if (info.sleep - info.hSleep > 0) {
+            info.sScore = info.sleep - info.hSleep;
+        }
+        var energyRecoverRate = info.oSleep / 24;
+        info.cEnergy = info.sleep / energyRecoverRate;
     }
 
-    self.CalcuateWeightDanger = function() {
+    self.AssignSleepRange = function() {
         var info = self.personalInfo;
-        var lowDanger = (info.cBMI - OPTIMAL_BMI) / DANGER_LOW_BMI_FACTOR;
-        var highDanger = (info.cBMI - OPTIMAL_BMI) / DANGER_HIGH_BMI_FACTOR;
-        info.wDanger = lowDanger > highDanger ? lowDanger : highDanger;
+        if (info.age < 3) {
+            info.lSleep = 11;
+            info.hSleep = 14;
+        } else if (info.age < 6) {
+            info.lSleep = 10;
+            info.hSleep = 13;
+        } else if (info.age < 14) {
+            info.lSleep = 9;
+            info.hSleep = 11;
+        } else if (info.age < 18) {
+            info.lSleep = 8;
+            info.hSleep = 10;
+        } else if (info.age < 65) {
+            info.lSleep = 7;
+            info.hSleep = 9;
+        } else {
+            info.lSleep = 7;
+            info.hSleep = 8;
+        }
+    }
+
+    self.CalculateTotalDanger = function() {
+        self.CalculateWeightDanger();
+        self.CalculateSleepDanger();
+        var info = self.personalInfo;
+        info.tDanger = info.wDanger + info.sDanger;
+    }
+
+    self.CalculateWeightDanger = function() {
+        var info = self.personalInfo;
+        info.wDanger = self.CalculateDanger(info.cBMI, OPTIMAL_BMI, DANGEROUSLY_LOW_BMI, DANGEROUSLY_HIGH_BMI);
+    }
+
+    self.CalculateSleepDanger = function() {
+        var info = self.personalInfo;
+        var target;
+        var danger;
+        if (info.sleep < info.lSleep) {
+            target = info.lSleep;
+            danger = info.lSleep / 2;
+        } else if (info.sleep > info.hSleep) {
+            target = info.hSleep;
+            danger = (info.hSleep + 24) / 2;
+        } else {
+            info.sDanger = 0;
+            return;
+        }
+        info.sDanger = self.DangerPercent(info.sleep, target, danger);
+    }
+
+    self.CalculateDanger = function(current, optimal, tooLow, tooHigh) {
+        var lowDanger = (current - optimal) / (tooLow - optimal);
+        var highDanger = (current - optimal) / (tooHigh - optimal);
+        return lowDanger > highDanger ? lowDanger : highDanger;
+    }
+
+    self.DangerPercent = function(current, target, danger) {
+        return (current - target) / (danger - target);
     }
 
     self.UpdateDisplay = function() {
@@ -151,19 +221,31 @@ var StressModel = function() {
         $('#d-bmr')[0].value = info.dBMR.toFixed(1);
         $('#weight-score')[0].textContent = info.wScore;
 
+        // Sleep based score
+        $('#d-sleep')[0].value = Math.abs(info.oSleep - info.sleep).toFixed(1);
+        $('#o-sleep')[0].value = info.oSleep.toFixed(1);
+        $('#c-energy')[0].value = info.cEnergy.toFixed(1);
+        $('#sleep-score')[0].textContent = info.sScore.toFixed(2);
+
         // Danger Display
-        var wPercent = (info.wDanger * 100).toFixed(2);
-        var totalDanger = info.wDanger;
-        $('#total-score')[0].textContent = wPercent;
+        var totalDanger = info.wDanger + info.sDanger;
+        $('#total-score')[0].textContent = self.ConvertToDisplayPercent(totalDanger);
         // Update accumulated
-        self.updateProgressBar($('#danger-weight')[0], wPercent);
+        self.updateProgressBar($('#danger-weight')[0], info.wDanger);
+        self.updateProgressBar($('#danger-sleep')[0], info.sDanger);
         // Update distribution
-        self.updateProgressBar($('#danger-dist-weight')[0], (info.wDanger / totalDanger * 100).toFixed(2));
+        self.updateProgressBar($('#danger-dist-weight')[0], info.wDanger / totalDanger);
+        self.updateProgressBar($('#danger-dist-sleep')[0], info.sDanger / totalDanger);
+    }
+
+    self.ConvertToDisplayPercent = function(percent) {
+        return (percent * 100).toFixed(2);
     }
 
     self.updateProgressBar = function(bar, percent) {
-        bar.style.width = percent + '%';
-        bar.ariaValueNow = percent;
+        var displayable = self.ConvertToDisplayPercent(percent);
+        bar.style.width = displayable + '%';
+        bar.ariaValueNow = displayable;
     }
 
     self.UpdateUnitDisplay = function() {
@@ -194,6 +276,7 @@ var StressModel = function() {
         $('#weight')[0].value = 190;
         $('#height')[0].value = 70;
         $('#units')[0].value = 'imperial';
+        $('#sleep')[0].value = 5;
         self.UpdatePersonalInfo();
         self.UpdateUnitDisplay();
     }
@@ -204,6 +287,7 @@ var StressModel = function() {
 var model = StressModel();
 
 jQuery(document).ready(function($) {
+    //model.test();
     // Auto-update personal info
     $('input, select').toArray().forEach(element => {
         element.onchange = function() {
