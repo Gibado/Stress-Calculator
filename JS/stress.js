@@ -188,21 +188,22 @@ var StressModel = function() {
         self.UpdateDisplay();
     }
 
+    self.test = function() {
+        $('#age')[0].value = 33;
+        $('#gender')[0].value = 'male';
+        $('#weight')[0].value = 190;
+        $('#height')[0].value = 70;
+        $('#units')[0].value = 'imperial';
+        self.UpdatePersonalInfo();
+        self.UpdateUnitDisplay();
+    }
+
     return self;
 }
 
 var model = StressModel();
 
 jQuery(document).ready(function($) {
-    // TODO: Remove after testing
-    $('#age')[0].value = 33;
-    $('#gender')[0].value = 'male';
-    $('#weight')[0].value = 190;
-    $('#height')[0].value = 70;
-    $('#units')[0].value = 'imperial';
-    model.UpdatePersonalInfo();
-    model.UpdateUnitDisplay();
-
     // Auto-update personal info
     $('input, select').toArray().forEach(element => {
         element.onchange = function() {
