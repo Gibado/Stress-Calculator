@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="container text-center">
+    <div class="container-fluid text-center">
         <div class="row">
             <div class="col">
                 <h1>Stress Metric</h1>
@@ -18,167 +18,190 @@
         <div class="row">
             <!-- Personal info -->
             <div class="col-sm-3">
-                <h3>Personal Info</h3>
                 <div class="row">
                     <div class="col-auto">
-                        <div class="form-floating mb-3">
-                            <input id="age" type="number" class="form-control" placeholder="Age" aria-label="Age" aria-describedby="age">
-                            <label for="age">Age</label>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="form-floating mb-3">
-                            <select id="gender" class="form-select" aria-label="Gender" aria-describedby="gender">
-                                <option selected>Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                            <label for="gender">Gender</label>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="form-floating mb-3">
-                            <select id="units" class="form-select" aria-label="Units" aria-describedby="units">
-                                <option selected>Units</option>
-                                <option value="imperial">Imperial</option>
-                                <option value="metric">Metric</option>
-                            </select>
-                            <label for="units">Units</label>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-3">
-                            <div class="form-floating">
-                                <input id="weight" type="number" class="form-control" placeholder="Weight" aria-label="Weight" aria-describedby="weight">
-                                <label for="weight">Weight</label>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title">Personal Info</h3>
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div class="form-floating mb-3">
+                                            <input id="age" type="number" class="form-control" placeholder="Age" aria-label="Age" aria-describedby="age">
+                                            <label for="age">Age</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="form-floating mb-3">
+                                            <select id="gender" class="form-select" aria-label="Gender" aria-describedby="gender">
+                                                <option selected>Gender</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                            </select>
+                                            <label for="gender">Gender</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="form-floating mb-3">
+                                            <select id="units" class="form-select" aria-label="Units" aria-describedby="units">
+                                                <option selected>Units</option>
+                                                <option value="imperial">Imperial</option>
+                                                <option value="metric">Metric</option>
+                                            </select>
+                                            <label for="units">Units</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="input-group mb-3">
+                                            <div class="form-floating">
+                                                <input id="weight" type="number" class="form-control" placeholder="Weight" aria-label="Weight" aria-describedby="weight">
+                                                <label for="weight">Weight</label>
+                                            </div>
+                                            <span class="input-group-text weight-type">(?)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="input-group mb-3">
+                                            <div class="form-floating">
+                                                <input id="height" type="number" class="form-control" placeholder="Height" aria-label="Height" aria-describedby="height">
+                                                <label for="height">Height</label>
+                                            </div>
+                                            <span class="input-group-text height-type">(?)</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="input-group mb-3">
+                                            <div class="form-floating">
+                                                <input id="sleep" type="number" class="form-control" placeholder="Sleep" aria-label="Sleep" aria-describedby="sleep">
+                                                <label for="sleep">Sleep per Night</label>
+                                            </div>
+                                            <span class="input-group-text">(Hours)</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <span class="input-group-text weight-type">(?)</span>
                         </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-3">
-                            <div class="form-floating">
-                                <input id="height" type="number" class="form-control" placeholder="Height" aria-label="Height" aria-describedby="height">
-                                <label for="height">Height</label>
+
+                        <div class="col-auto">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h3 class="card-title">Results</h3>
+                                    <h4 class="card-subtitle text-muted mb-2">Danger Rating: <span id="total-score">0</span>%</h4>
+                                    <h5>Accumulated Danger</h5>
+                                    <div class="progress">
+                                        <div id="danger-weight" class="progress-bar" role="progressbar" aria-label="weight segment" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div id="danger-sleep" class="progress-bar bg-info" role="progressbar" aria-label="sleep segment" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <h5>Danger Distribution</h5>
+                                    <div class="progress">
+                                        <div id="danger-dist-weight" class="progress-bar" role="progressbar" aria-label="weight segment" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div id="danger-dist-sleep" class="progress-bar bg-info" role="progressbar" aria-label="sleep segment" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <span class="input-group-text height-type">(?)</span>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="input-group mb-3">
-                            <div class="form-floating">
-                                <input id="sleep" type="number" class="form-control" placeholder="Sleep" aria-label="Sleep" aria-describedby="sleep">
-                                <label for="sleep">Sleep per Night</label>
-                            </div>
-                            <span class="input-group-text">(Hours)</span>
                         </div>
                     </div>
                 </div>
+
             </div>
             <!-- Calculated results -->
             <div class="col-sm-9">
                 <div class="row">
-                    <div class="col">
-                        <h1>Results</h1>
-                    </div>
-                    <div class="col">
-                        <h2>Danger Rating: <span id="total-score">0</span>%</h2>
-                    </div>
-                    <div class="col">
-                        <h4>Accumulated Danger</h4>
-                        <div class="progress">
-                            <div id="danger-weight" class="progress-bar" role="progressbar" aria-label="weight segment" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                            <div id="danger-sleep" class="progress-bar bg-info" role="progressbar" aria-label="sleep segment" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <h4>Danger Distribution</h4>
-                        <div class="progress">
-                            <div id="danger-dist-weight" class="progress-bar" role="progressbar" aria-label="weight segment" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                            <div id="danger-dist-sleep" class="progress-bar bg-info" role="progressbar" aria-label="sleep segment" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
+
                     <div class="col-auto">
-                        <h4>Weight Based Score</h4>
-                        <div class="row">
-                            <!-- Result -->
-                            <div class="col">
-                                <h1>Score: <span id="weight-score"></span></h1>
-                            </div>
-                            <!-- Calcuated values -->
-                            <div class="col">
+                        <div class="card text-bg-primary bg-opacity-50 mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title">Weight Based Score</h3>
+                                <!-- Result -->
+                                <h4 class="card-subtitle text-muted mb-2">Score: <span id="weight-score">0</span></h4>
                                 <div class="row">
-                                    <h5>Body Mass Index (BMI)</h5>
+                                    <!-- Calcuated values -->
                                     <div class="col-auto">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">Current</span>
-                                            <input id="bmi" type="number" class="form-control" aria-label="Current BMI" aria-describedby="bmi" disabled readonly>
+                                        <div class="card text-bg-primary">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Body Mass Index (BMI)</h5>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text">Current</span>
+                                                    <input id="bmi" type="number" class="form-control" aria-label="Current BMI" aria-describedby="bmi" disabled readonly>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text">Optimal Weight</span>
+                                                    <input id="o-weight" type="number" class="form-control" aria-label="Optimal Weight" aria-describedby="o-weight" disabled readonly>
+                                                    <span class="input-group-text weight-type">(?)</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">Optimal Weight</span>
-                                            <input id="o-weight" type="number" class="form-control" aria-label="Optimal Weight" aria-describedby="o-weight" disabled readonly>
-                                            <span class="input-group-text weight-type">(?)</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="card text-bg-primary">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Basal Metabolic Rate (BMR)</h5>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text">Difference</span>
+                                                    <input id="d-bmr" type="number" class="form-control" aria-label="BMR Difference" aria-describedby="d-bmr" disabled readonly>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text">Current</span>
+                                                    <input id="c-bmr" type="number" class="form-control" aria-label="Current BMR" aria-describedby="c-bmr" disabled readonly>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text">BMR at Optimal Weight</span>
+                                                    <input id="o-bmr" type="number" class="form-control" aria-label="Optimal BMR" aria-describedby="o-bmr" disabled readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Background info -->
+                                    <div class="col">
+                                        <div class="card text-bg-primary">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Details</h5>
+                                                <p>This is based on using your BMI to identify your optimal weight. Then your Basal Metabolic Rate is compared between both weights. The Basal Metabolic Rate is calcuated by using the average of the Mifflin-St
+                                                    Jeor and Revised Harris-Benedict Equations.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <h5>Basal Metabolic Rate (BMR)</h5>
-                                    <div class="col-auto">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">Difference</span>
-                                            <input id="d-bmr" type="number" class="form-control" aria-label="BMR Difference" aria-describedby="d-bmr" disabled readonly>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">Current</span>
-                                            <input id="c-bmr" type="number" class="form-control" aria-label="Current BMR" aria-describedby="c-bmr" disabled readonly>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">BMR at Optimal Weight</span>
-                                            <input id="o-bmr" type="number" class="form-control" aria-label="Optimal BMR" aria-describedby="o-bmr" disabled readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Background info -->
-                            <div class="col">
-                                <p>This is based on using your BMI to identify your optimal weight. Then your Basal Metabolic Rate is compared between both weights. The Basal Metabolic Rate is calcuated by using the average of the Mifflin-St Jeor and Revised
-                                    Harris-Benedict Equations.</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-auto">
-                        <h4>Sleep Based Score</h4>
-                        <div class="row">
-                            <!-- Result -->
-                            <div class="col">
-                                <h1>Score: <span id="sleep-score"></span></h1>
-                            </div>
-                            <!-- Calcuated values -->
-                            <div class="col">
+                        <div class="card text-bg-info bg-opacity-50 mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title">Sleep Based Score</h3>
+                                <!-- Result -->
+                                <h4 class="card-subtitle text-muted mb-2">Score: <span id="sleep-score">0</span></h4>
                                 <div class="row">
-                                    <h5>Sleep hours</h5>
+                                    <!-- Calcuated values -->
                                     <div class="col-auto">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">Difference</span>
-                                            <input id="d-sleep" type="number" class="form-control" aria-label="Sleep Hours Difference" aria-describedby="d-sleep" disabled readonly>
+                                        <div class="card text-bg-info">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Sleep hours</h5>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text">Difference</span>
+                                                    <input id="d-sleep" type="number" class="form-control" aria-label="Sleep Hours Difference" aria-describedby="d-sleep" disabled readonly>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text">Optimal Sleep</span>
+                                                    <input id="o-sleep" type="number" class="form-control" aria-label="Optimal Sleep Hours" aria-describedby="o-sleep" disabled readonly>
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text">Estimated Energy Recovered</span>
+                                                    <input id="c-energy" type="number" class="form-control" aria-label="Estimated Energy Recovery" aria-describedby="c-energy" disabled readonly>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">Optimal Sleep</span>
-                                            <input id="o-sleep" type="number" class="form-control" aria-label="Optimal Sleep Hours" aria-describedby="o-sleep" disabled readonly>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">Estimated Energy Recovered</span>
-                                            <input id="c-energy" type="number" class="form-control" aria-label="Estimated Energy Recovery" aria-describedby="c-energy" disabled readonly>
+                                    </div>
+                                    <!-- Background info -->
+                                    <div class="col">
+                                        <div class="card text-bg-info">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Details</h5>
+                                                <p>This is based on your average hours of sleep per night and using your age to identify your optimal hours of sleep. Your estimated energy recovered is derived from the percentage of the day you should sleep
+                                                    to tell you how many hours of normal energy you should expect.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Background info -->
-                            <div class="col">
-                                <p>This is based on your average hours of sleep per night and using your age to identify your optimal hours of sleep. Your estimated energy recovered is derived from the percentage of the day you should sleep to tell you how
-                                    many hours of normal energy you should expect.</p>
                             </div>
                         </div>
                     </div>
