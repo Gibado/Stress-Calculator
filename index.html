@@ -19,40 +19,60 @@
             <!-- Personal info -->
             <div class="col-sm-3">
                 <h3>Personal Info</h3>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Age</span>
-                    <input id="age" type="number" class="form-control" placeholder="Age" aria-label="Age" aria-describedby="age">
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Gender</span>
-                    <select id="gender" class="form-select" aria-label="Gender" aria-describedby="gender">
-                        <option selected>Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Units</span>
-                    <select id="units" class="form-select" aria-label="Units" aria-describedby="units">
-                        <option selected>Units</option>
-                        <option value="imperial">Imperial</option>
-                        <option value="metric">Metric</option>
-                    </select>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Weight</span>
-                    <input id="weight" type="number" class="form-control" placeholder="Weight" aria-label="Weight" aria-describedby="weight">
-                    <span class="input-group-text weight-type">(?)</span>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Height</span>
-                    <input id="height" type="number" class="form-control" placeholder="Height" aria-label="Height" aria-describedby="height">
-                    <span class="input-group-text height-type">(?)</span>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Sleep per Night</span>
-                    <input id="sleep" type="number" class="form-control" placeholder="Sleep" aria-label="Sleep" aria-describedby="sleep">
-                    <span class="input-group-text">(Hours)</span>
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="form-floating mb-3">
+                            <input id="age" type="number" class="form-control" placeholder="Age" aria-label="Age" aria-describedby="age">
+                            <label for="age">Age</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-floating mb-3">
+                            <select id="gender" class="form-select" aria-label="Gender" aria-describedby="gender">
+                                <option selected>Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <label for="gender">Gender</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="form-floating mb-3">
+                            <select id="units" class="form-select" aria-label="Units" aria-describedby="units">
+                                <option selected>Units</option>
+                                <option value="imperial">Imperial</option>
+                                <option value="metric">Metric</option>
+                            </select>
+                            <label for="units">Units</label>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input id="weight" type="number" class="form-control" placeholder="Weight" aria-label="Weight" aria-describedby="weight">
+                                <label for="weight">Weight</label>
+                            </div>
+                            <span class="input-group-text weight-type">(?)</span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input id="height" type="number" class="form-control" placeholder="Height" aria-label="Height" aria-describedby="height">
+                                <label for="height">Height</label>
+                            </div>
+                            <span class="input-group-text height-type">(?)</span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="input-group mb-3">
+                            <div class="form-floating">
+                                <input id="sleep" type="number" class="form-control" placeholder="Sleep" aria-label="Sleep" aria-describedby="sleep">
+                                <label for="sleep">Sleep per Night</label>
+                            </div>
+                            <span class="input-group-text">(Hours)</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Calculated results -->
