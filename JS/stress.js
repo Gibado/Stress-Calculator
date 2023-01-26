@@ -244,8 +244,9 @@ var StressModel = function() {
 
     self.updateProgressBar = function(bar, percent) {
         var displayable = self.ConvertToDisplayPercent(percent);
-        bar.style.width = displayable + '%';
         bar.ariaValueNow = displayable;
+        bar.style.width = displayable + '%';
+        bar.textContent = bar.style.width;
     }
 
     self.UpdateUnitDisplay = function() {
